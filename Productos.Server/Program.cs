@@ -1,4 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
+using Productos.Server.Models;
+
 namespace Productos.Server
 {
     public class Program
@@ -6,6 +9,10 @@ namespace Productos.Server
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddDbContext<ProductosContext>(o =>
+            {
+                o.UseSqlServer(builder.Configuration.GetConnectionString("conexion"));
+            });
 
             // Add services to the container.
 
