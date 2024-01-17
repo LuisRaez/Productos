@@ -30,6 +30,21 @@ namespace Productos.Cliente.Controllers
             return View(new List<ProductoViewModel>()); // Puedes mostrar una vista vacía o un mensaje de error.
         }
 
+        public async Task<IActionResult> IndexExtra()
+        {
+            var response = await _httpClient.GetAsync("/api/Productos/listaProducto");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var productos = JsonConvert.DeserializeObject<IEnumerable<ProductoViewModel>>(content);
+                return View("IndexExtra", productos);
+            }
+
+            // Manejar el caso en que la solicitud HTTP no fue exitosa.
+            return View(new List<ProductoViewModel>()); // Puedes mostrar una vista vacía o un mensaje de error.
+        }
+
         public async Task<IActionResult> Details(int id)
         {
 

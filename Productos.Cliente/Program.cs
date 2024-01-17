@@ -29,7 +29,7 @@ namespace Productos.Cliente
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Producto}/{action=Index}/{id?}");
+                pattern: "{controller=Producto}/{action=IndexExtra}/{id?}");
 
             app.Run();
         }

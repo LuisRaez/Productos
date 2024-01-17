@@ -1,0 +1,145 @@
+﻿@model IEnumerable<ProductoViewModel>
+
+<div class="card text-primary">
+    <div class="card-header text-center">
+        <h5>Lista de Productos en index extra</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        @* <a asp-action="Create" class="btn btn-outline-primary btn-sm">Crear Nuevo</a> *@
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#CreateModal">
+                            Crear Nuevo
+                        </button>
+                        <hr />
+                        <h5 class="panel-title">Productos</h5>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-hover table-responsive table-striped" id="MyTable">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Nombre)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Descripcion)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Precio)
+                                    </th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Nombre)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Descripcion)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Precio)
+                                        </td>
+
+                                        <td>
+                                            <button type="button" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#EditModal">
+                                                Edit
+                                            </button>
+                                            <button type="button" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#DetailModal">
+                                                Details
+                                            </button>
+                                            <button type="button" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm">
+                                                Delete
+                                            </button>
+                                            @* <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning btn-sm">Editar</a>
+                                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Detalles</a> *@
+                                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm">Eliminar</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@* Inicio de modal de creacion *@
+<div class="modal fade" id="CreateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @* @await Html.PartialAsync("/Views/Producto/Create.cshtml", new ProductoViewModel()) *@
+                @{
+                    await Html.RenderPartialAsync("Create", new ProductoViewModel());
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@* Fin del modal de creacion *@
+
+
+@* Inicio de modal de Edicion *@
+<div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar el Producto</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @* <partial name="Edit" model="new ProductoViewModel()" /> *@
+                @* @await Html.PartialAsync("/Views/Producto/Edit.cshtml", new ProductoViewModel()) *@
+                @{
+                    var productoViewModel = new ProductoViewModel{Id = 2 };
+                    await Html.RenderPartialAsync("Edit", productoViewModel);
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@* Fin del modal de edicion *@
+
+
+@* Inicio de modal de detalle *@
+<div class="modal fade" id="DetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Detalle del Producto</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @* @await Html.PartialAsync("/Views/Producto/Details.cshtml", new ProductoViewModel()) *@
+                @{
+                    await Html.RenderPartialAsync("Details", new ProductoViewModel());
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@* Fin del modal de detalle *@
